@@ -26,7 +26,7 @@ class AdminSiteTests(TestCase):
         print("response of http request-------", res)
 
         self.assertContains(res, self.user.name)
-        """ what `assertContains` it does is it checks that 
+        """ what `assertContains` it does is it checks that
             the HTTP response was HTTP 200 and that
             it looks into the actual content of this 'res'
         """
