@@ -18,6 +18,9 @@ def create_user(**params):
 
 class PublicUserApiTests(TestCase):
     """Test the users API (public)"""
+    """All the test-case in 'public' are by the users
+        which are not authenticated (or in django an Anonymous user)
+    """
 
     def setUp(self):
         self.client = APIClient()
@@ -29,13 +32,13 @@ class PublicUserApiTests(TestCase):
             'password': 'testpass',
             'name': 'name',
         }
+        # 'payload' is the body of the request
+        # the below code will send a HTTP post request
         res = self.client.post(CREATE_USER_URL, payload)
-
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
         user = get_user_model().objects.get(**res.data)
-        self.assertTrue(
-            user.check_password(payload['password'])
-        )
+        self.assertTrue(user.check_password(payload['password']))
         self.assertNotIn('password', res.data)
 
     def test_user_exists(self):
